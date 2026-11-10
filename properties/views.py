@@ -34,7 +34,7 @@ def create_property(request):
     if request.user.role != User.Role.LANDLORD:
         raise PermissionDenied("Only landlords can submit properties.")
     if request.method == "POST":
-        form = PropertyForm(request.POST)
+        form = PropertyForm(request.POST, request.FILES)
         images = request.FILES.getlist("images")
         if form.is_valid():
             if len(images) > 8:
@@ -56,20 +56,20 @@ def create_property(request):
                     "Listing submitted. It is pending for admin to review.",
                 )
                 return redirect("dashboard")
-        else:
+    else:
             form = PropertyForm()
-        return render(
+    return render(
             request,
             "properties/property_form.html",
             {"form": form},
         )
-    def property_detail(request, pk):
-        prop = get_object_or_404(
+def property_detail(request, pk):
+    prop = get_object_or_404(
             Property.objects.prefetch_related("images"),
             pk=pk,
             status = Property.Status.APPROVED,
         )
-        return render(
+    return render(
             request,
             "properties/property_detail.html",
             {"property": prop},
