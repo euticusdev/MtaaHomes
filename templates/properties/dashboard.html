@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}Dashboard | MtaaHomes{% endblock %}
+{% block content %}
+<h1>Your dashboard</h1>
+{% if user.role == "LANDLORD" %}
+<p>Manage your property submissions and check their review status.</p>
+<a class="button" href="{% url 'create_property' %}">Submit a property</a>
+{% else %}
+<p>Approved properties are available on the home page.</p>
+{% endif %} {% for item in listings %}
+<div class="card">
+  <h2>{{ item.title }}</h2>
+  <p>{{ item.area }} · KSh {{ item.monthly_rent }}</p>
+  {% if user.role == "LANDLORD" %}
+  <p>Status: <strong>{{ item.get_status_display }}</strong></p>
+  {% if item.admin_note %}
+  <p>Admin note: {{ item.admin_note }}</p>
+  {% endif %} {% endif %}
+</div>
+{% empty %}
+<p class="card">Nothing to display yet.</p>
+{% endfor %} {% endblock %}

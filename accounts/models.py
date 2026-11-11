@@ -11,5 +11,10 @@ class User(AbstractUser):
         default=Role.SEEKER,
     )
     phone_number = models.CharField(max_length=20, blank=True)
+
     def __str__(self):
-        return f"{self.username} ({self.get_role_display()})"
+        role_display = next(
+            (label for value, label in self.Role.choices if value == self.role),
+            self.role,
+        )
+        return f"{self.username} ({role_display})"

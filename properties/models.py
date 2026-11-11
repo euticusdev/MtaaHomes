@@ -48,8 +48,9 @@ class Property(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
-        def __str__(self):
-            return self.title
+
+    def __str__(self):
+        return self.title
 
 class PropertyImage(models.Model):
         property = models.ForeignKey(

@@ -1,0 +1,11 @@
+{% extends "base.html" %} {% block title %}Log in | MtaaHomes{% endblock %} {%
+block content %}
+<div class="card">
+  <h1>Welcome back</h1>
+  <form method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button class="button" type="submit">Log in</button>
+  </form>
+  <p>New here? <a href="{% url 'register' %}">Create an account</a>.</p>
+</div>
+{% endblock %}

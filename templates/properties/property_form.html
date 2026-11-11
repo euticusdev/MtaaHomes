@@ -1,0 +1,13 @@
+{% extends "base.html" %} {% block title %}Submit a house | MtaaHomes{% endblock
+%} {% block content %}
+<div class="card">
+  <h1>Submit a property</h1>
+  <p>Your listing will remain private until an administrator approves it.</p>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %} {{ form.as_p }}
+    <label for="images">House photos (maximum 8)</label>
+    <input id="images" type="file" name="images" accept="image/*" multiple />
+    <button class="button" type="submit">Submit for review</button>
+  </form>
+</div>
+{% endblock %}

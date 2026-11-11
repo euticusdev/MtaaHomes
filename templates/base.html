@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}MtaaHomes{% endblock %}</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background: #f5f7fa;
+        color: #182334;
+      }
+      header {
+        background: #101b2d;
+        color: white;
+        padding: 16px 5%;
+      }
+      header a {
+        color: white;
+        text-decoration: none;
+        margin-right: 14px;
+      }
+      main {
+        max-width: 1050px;
+        margin: 28px auto;
+        padding: 0 18px;
+      }
+      .card {
+        background: white;
+        padding: 18px;
+        border-radius: 10px;
+        margin: 12px 0;
+      }
+      .button {
+        display: inline-block;
+        background: #16b89a;
+        color: #071b19;
+        padding: 10px 14px;
+        border: 0;
+        border-radius: 6px;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 9px;
+        margin: 5px 0 12px;
+        box-sizing: border-box;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      .muted {
+        color: #657386;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="{% url 'home' %}"><strong>MtaaHomes</strong></a>
+      <a href="{% url 'home' %}">Find a house</a>
+      {% if user.is_authenticated %}
+      <a href="{% url 'dashboard' %}">Dashboard</a>
+      {% if user.role == "LANDLORD" %}
+      <a href="{% url 'create_property' %}">Post a house</a>
+      {% endif %}
+      <form method="post" action="{% url 'logout' %}" style="display: inline">
+        {% csrf_token %}
+        <button type="submit">Log out</button>
+      </form>
+      {% else %}
+      <a href="{% url 'login' %}">Log in</a>
+      <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </header>
+    <main>
+      {% if messages %} {% for message in messages %}
+      <div class="card">{{ message }}</div>
+      {% endfor %} {% endif %} {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

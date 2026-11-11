@@ -1,0 +1,27 @@
+{% extends "base.html" %} {% block title %}{{ property.title }} | MtaaHomes{%
+endblock %} {% block content %}
+<div class="card">
+  <h1>{{ property.title }}</h1>
+  MtaaHomes Phase 1 — Code Reference
+  <p>
+    {{ property.area }}{% if property.landmark %} · {{ property.landmark }}{%
+    endif %}
+  </p>
+  <p><strong>KSh {{ property.monthly_rent }} per month</strong></p>
+  <p>Deposit: KSh {{ property.deposit }}</p>
+  <p>
+    {{ property.get_property_type_display }} · {{ property.bedrooms }}
+    bedroom(s)
+  </p>
+  <p>{{ property.description|linebreaks }}</p>
+  {% for photo in property.images.all %}
+  <img src="{{ photo.image.url }}" alt="Photo of {{ property.title }}" />
+  {% empty %}
+  <p>No photos uploaded.</p>
+  {% endfor %}
+  <p class="muted">
+    This listing was reviewed by a MtaaHomes administrator. Always visit and
+    verify a property before paying any money.
+  </p>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block title %}MtaaHomes | Find a house{% endblock
+%} {% block content %}
+<h1>Find your next home around MUT</h1>
+<p class="muted">Browse listings reviewed by the MtaaHomes administrator.</p>
+{% for item in listings %}
+<div class="card">
+  {% with first_image=item.images.first %} {% if first_image %}
+  <img src="{{ first_image.image.url }}" alt="{{ item.title }}" />
+  {% endif %} {% endwith %} MtaaHomes Phase 1 — Code Reference
+  <h2><a href="{% url 'property_detail' item.pk %}">{{ item.title }}</a></h2>
+  <p>{{ item.area }}{% if item.landmark %} · {{ item.landmark }}{% endif %}</p>
+  <p>KSh {{ item.monthly_rent }} per month</p>
+  <p>{{ item.get_property_type_display }}</p>
+</div>
+{% empty %}
+<div class="card">No approved houses have been published yet.</div>
+{% endfor %} {% endblock %}
